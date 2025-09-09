@@ -1,9 +1,5 @@
-import os
-import uuid
-import logging
-import subprocess
-from flask import Flask, request, jsonify, send_from_directory, url_for, Response
-from flask_cors import CORS
-from ultralytics import YOLO
-import cv2
+Flask
+flask-cors
+ultralytics
+opencv-python
 gunicorn
