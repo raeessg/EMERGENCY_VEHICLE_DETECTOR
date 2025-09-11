@@ -56,7 +56,7 @@ traffic_light_html = f"""
     <div class="light green"></div>
   </div>
   <div class="vid">
-    <video autoplay muted loop width="500" height="220">
+    <video autoplay muted loop >
       <source src="data:video/mp4;base64,{video_b64}" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -64,7 +64,10 @@ traffic_light_html = f"""
 </div>
 
 <style>
-
+.vid video{{
+width:250px;
+    border-radius:10px;
+}}
 
 #t {{
   display: flex;
@@ -191,11 +194,11 @@ if st.button("Detect", disabled=not uploaded_file):
         with open(temp_file_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
 
-        with st.spinner("Processing video..."):
+        with st.spinner("Processing your video… If an **emergency vehicle** is detected, the signal will stay green 🟢 to clear the path."):
             try:
                 with open(temp_file_path, "rb") as f:
                     files = {"video": (uploaded_file.name, f, "video/mp4")}
-                    response = requests.post("http://localhost:5000/detect", files=files, timeout=300)
+                    response = requests.post("https://raeessg-raeespace.hf.space/detect", files=files, timeout=300)
 
                 if response.status_code == 200:
                     data = response.json()
@@ -220,7 +223,7 @@ if st.button("Detect", disabled=not uploaded_file):
 # Show results
 # ---------------------------
 if st.session_state.detection_status:
-    st.info(f"Showing results for: {st.session_state.last_uploaded_filename}")
+    # st.info(f"Showing results for: {st.session_state.last_uploaded_filename}")
     status = st.session_state.detection_status
     status_color = "green" if status == "Yes" else "blue"
     st.markdown(f"**Emergency Detected:** <span style='color:{status_color}'>{status}</span>", unsafe_allow_html=True)
@@ -318,6 +321,10 @@ st.markdown(
 
     <p style="font-size: 16px; opacity: 0.8; margin-top: 20px;">
     Developed with ❤️ for innovation in public safety and emergency response.
+    </p>
+
+    <p style="font-size: 16px; margin-top: 15px;">
+    Connect with me on LinkedIn: <a href="https://www.linkedin.com/in/mdrayeesansari/" target="_blank" style="color:#0A66C2; text-decoration: underline;">Md Rayees Ansari</a>
     </p>
 
     </div>
